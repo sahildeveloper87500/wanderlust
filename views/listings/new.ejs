@@ -1,37 +1,169 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WanderLust</title>
-  </head>
-  <body>
-    <h3>Create a New Listing</h3>
-    <form method="POST" action="/listings">
-      <input name="listing[title]" placeholder="enter title" type="text" />
-      <br /><br />
-      <textarea
-        name="listing[description]"
-        placeholder="enter description"
-      ></textarea>
-      <br /><br />
-      <input
-        name="listing[image]"
-        placeholder="enter image URL/Link"
-        type="text"
-      />
-      <br /><br />
-      <input name="listing[price]" placeholder="enter price" type="number" />
-      <br /><br />
-      <input name="listing[country]" placeholder="enter country" type="text" />
-      <br /><br />
-      <input
-        name="listing[location]"
-        placeholder="enter location"
-        type="text"
-      />
-      <br /><br />
-      <button>Add</button>
-    </form>
-  </body>
-</html>
+<% layout("/layouts/boilerplate")  -%>
+<body>
+  <h3 style="color: white;">ENTER THE HOURLY ELECTRICITY DEMAND OF YOUR STATE </h3>
+  <form method="POST" action="/listings" novalidate class="needs-validation">
+
+    <div class="cols mg-4">
+      <label for="city" class="form-label" style="color: white;">Enter STATE Name </label>
+      <input name="listing[city]" placeholder="enter city" type="text" class="form-control" required/>
+      <div class="invalid-feedback text-white">City Not Entered</div>
+    </div>
+
+    <br>
+    <div class="cols mg-4">
+      <label for="description" class="form-label" style="color: white;">Type of STATE </label>
+      <input name="listing[description]" placeholder="enter description" type="text" class="form-control" required />
+      <div class="invalid-feedback">Description Not Added</div>
+    </div>
+    <br>
+
+    <div class="col mg-4">
+      <label for="firstHour" class="form-label" style="color: white;">0AM-1AM </label>  
+      <input name="listing[firstHour]" placeholder=" firstHour" type="number" class="form-control" required/>
+      <div class="invalid-feedback">Enter a Valid value</div>
+    </div>
+    <br>
+    <div class="col mg-4">
+      <label for="secondHour" class="form-label" style="color: white;">01AM-02AM </label>  
+      <input name="listing[secondHour]" placeholder=" secondHour" type="number" class="form-control" required/>
+      <div class="invalid-feedback">Enter a Valid value</div>
+    </div>
+    <br>
+    <div class="col mg-4">
+      <label for="thirdHour" class="form-label" style="color: white;">02AM-03AM </label>  
+      <input name="listing[thirdHour]" placeholder=" thirdHour" type="number" class="form-control" required/>
+      <div class="invalid-feedback">Enter a Valid value</div>
+    </div>
+    <br>
+    <div class="col mg-4">
+      <label for="ForthHour" class="form-label" style="color: white;">03AM-04AM </label>  
+      <input name="listing[ForthHour]" placeholder=" ForthHour" type="number" class="form-control" required/>
+      <div class="invalid-feedback">Enter a Valid value</div>
+    </div>
+    <br>
+    <div class="col mg-4">
+      <label for="fifthdHour" class="form-label" style="color: white;">04AM-05AM</label>  
+      <input name="listing[fifthdHour]" placeholder=" fifthdHour" type="number" class="form-control" required/>
+      <div class="invalid-feedback">Enter a Valid value</div>
+    </div>
+    <br>
+    <div class="col mg-4">
+      <label for="sixthHour" class="form-label" style="color: white;">05AM-06AM </label>  
+      <input name="listing[sixthHour]" placeholder=" sixthHour" type="number" class="form-control" required/>
+      <div class="invalid-feedback">Enter a Valid value</div>
+    </div>
+    <br>
+    <div class="col mg-4">
+      <label for="seventhHour" class="form-label" style="color: white;">06AM-07AM </label>  
+      <input name="listing[seventhHour]" placeholder=" seventhHour" type="number" class="form-control" required/>
+      <div class="invalid-feedback">Enter a Valid value</div>
+    </div>
+    <br>
+    <div class="col mg-4">
+      <label for="eightHour" class="form-label" style="color: white;">07AM-08AM </label>  
+      <input name="listing[eightHour]" placeholder=" eightHour" type="number" class="form-control" required/>
+      <div class="invalid-feedback">Enter a Valid value</div>
+    </div>
+    <br>
+    <div class="col mg-4">
+      <label for="NinthHour" class="form-label" style="color: white;">08AM-09AM</label>  
+      <input name="listing[NinthHour]" placeholder=" NinthHour" type="number" class="form-control" required/>
+      <div class="invalid-feedback">Enter a Valid value</div>
+    </div>
+    <br>
+    <div class="col mg-4">
+      <label for="tenthHour" class="form-label" style="color: white;">09AM-10AM </label>  
+      <input name="listing[tenthHour]" placeholder=" tenthHour" type="number" class="form-control" required/>
+      <div class="invalid-feedback">Enter a Valid value</div>
+    </div>
+    <br>
+    <div class="col mg-4">
+      <label for="eleventhHour" class="form-label" style="color: white;">10AM-11AM</label>  
+      <input name="listing[eleventhHour]" placeholder=" eleventhHour" type="number" class="form-control" required/>
+      <div class="invalid-feedback">Enter a Valid value</div>
+    </div>
+    <br>
+    <div class="col mg-4">
+      <label for="twelveHour" class="form-label" style="color: white;">11AM-12PM </label>  
+      <input name="listing[twelveHour]" placeholder=" twelveHour" type="number" class="form-control" required/>
+      <div class="invalid-feedback">Enter a Valid value</div>
+    </div>
+    <br>
+    <div class="col mg-4">
+      <label for="thirteenHour" class="form-label" style="color: white;">12PM-01PM</label>  
+      <input name="listing[thirteenHour]" placeholder=" thirteenHour" type="number" class="form-control" required/>
+      <div class="invalid-feedback">Enter a Valid value</div>
+    </div>
+    <br>
+    <div class="col mg-4">
+      <label for="fourteenHour" class="form-label" style="color: white;">01PM-02PM </label>  
+      <input name="listing[fourteenHour]" placeholder=" fourteenHour" type="number" class="form-control" required/>
+      <div class="invalid-feedback">Enter a Valid value</div>
+    </div>
+    <br>
+    <div class="col mg-4">
+      <label for="fifteenHour" class="form-label" style="color: white;">02PM-03PM</label>  
+      <input name="listing[fifteenHour]" placeholder=" fifteenHour" type="number" class="form-control" required/>
+      <div class="invalid-feedback">Enter a Valid value</div>
+    </div>
+    <br>
+    <div class="col mg-4">
+      <label for="sixteenHour" class="form-label" style="color: white;">03PM-04PM</label>  
+      <input name="listing[sixteenHour]" placeholder=" sixteenHour" type="number" class="form-control" required/>
+      <div class="invalid-feedback">Enter a Valid value</div>
+    </div>
+    <br>
+    <div class="col mg-4">
+      <label for="seventeenHour" class="form-label" style="color: white;">04PM-05PM </label>  
+      <input name="listing[seventeenHour]" placeholder=" seventeenHour" type="number" class="form-control" required/>
+      <div class="invalid-feedback">Enter a Valid value</div>
+    </div>
+    <br>
+    <div class="col mg-4">
+      <label for="eighteenHour" class="form-label" style="color: white;">05PM-06PM</label>  
+      <input name="listing[eighteenHour]" placeholder=" eighteenHour" type="number" class="form-control" required/>
+      <div class="invalid-feedback">Enter a Valid value</div>
+    </div>
+    <br>
+    <div class="col mg-4">
+      <label for="nineteenHour" class="form-label" style="color: white;">06PM-07PM</label>  
+      <input name="listing[nineteenHour]" placeholder=" nineteenHour" type="number" class="form-control" required/>
+      <div class="invalid-feedback">Enter a Valid value</div>
+    </div>
+    <br>
+    <div class="col mg-4">
+      <label for="twentyHour" class="form-label" style="color: white;">07PM-08PM</label>  
+      <input name="listing[twentyHour]" placeholder=" twentyHour" type="number" class="form-control" required/>
+      <div class="invalid-feedback">Enter a Valid value</div>
+    </div>
+    <br>
+    <div class="col mg-4">
+      <label for="twenthoneHour" class="form-label" style="color: white;">08PM-09PM</label>  
+      <input name="listing[twenthoneHour]" placeholder=" twenthoneHour" type="number" class="form-control" required/>
+      <div class="invalid-feedback">Enter a Valid value</div>
+    </div>
+    <br>  
+    <div class="col mg-4">
+      <label for="twenthtwoHour" class="form-label" style="color: white;">09PM-10PM</label>  
+      <input name="listing[twenthtwoHour]" placeholder=" twenthtwoHour" type="number" class="form-control" required/>
+      <div class="invalid-feedback">Enter a Valid value</div>
+    </div>
+    <br>
+    <div class="col mg-4">
+      <label for="twentythreeHour" class="form-label" style="color: white;">10PM-11PM</label>  
+      <input name="listing[twentythreeHour]" placeholder=" twentythreeHour" type="number" class="form-control" required/>
+      <div class="invalid-feedback">Enter a Valid value</div>
+    </div>
+    <br>
+    <div class="col mg-4">
+      <label for="twentyfourHour" class="form-label" style="color: white;">11PM-12PM</label>  
+      <input name="listing[twentyfourHour]" placeholder=" twentyfourHour" type="number" class="form-control" required/>
+      <div class="invalid-feedback">Enter a Valid value</div>
+    </div>
+     <br>
+     <br>
+    <button class="btn btn-dark btn-lg">Add</button>
+    <br>
+    <br>
+  </form>
+</body>

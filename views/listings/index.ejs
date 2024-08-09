@@ -1,19 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WanderLust</title>
-  </head>
-  <body>
-    <h3>All Listings</h3>
-    <form method="GET" action="/listings/new">
-      <button>Create New Listing</button>
-    </form>
-    <ul>
-      <% for(let listing of allListings) { %>
-      <li><a href="/listings/<%= listing._id %>"> <%= listing.title %> </a></li>
-      <% } %>
-    </ul>
-  </body>
-</html>
+<% layout("/layouts/boilerplate") -%>
+
+<div class="row row-cols-lg-4">
+  <% for(let listing of allListings) { %>
+    <div class="card shadow-lg" style="width: 15rem;">
+      <div class="card-body">
+        <h5 class="card-title"><%= listing.city.toUpperCase() %>
+        </h5>
+        <h6 class="card-subtitle mb-2 text-body-secondary"><%= listing.description %></h6>
+        <p class="card-text">THIS CARD CONTAIN THE ELECTRICITY USAGE/HOUR OF  <%=listing.city%>.</p>
+        <button class="button-81" role="button">  
+          <a href="/listings/<%= listing._id %>" class="card-link">CLICK TO OPEN</a></button>
+      </div>
+    </div>
+  <% } %>
+</div>
+
+
+
+
+
+
+

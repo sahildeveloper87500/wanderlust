@@ -1,36 +1,154 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wanderlust</title>
-  </head>
+<% layout("/layouts/boilerplate")  -%>
   <body>
     <h3>Edit your Listing</h3>
     <form method="POST" action="/listings/<%= listing._id %>?_method=PUT">
-      <input name="listing[title]" value="<%= listing.title %>" type="text" />
+    <div class="cols mg-4">
+      <label for="city" class="form-label"><b>enter you STATE</b></label>
+      <input name="listing[city]" value="<%= listing.city %> " class="form-control" type="text" required/>
+     
+    </div>
+      
+
+   <div class="cols mg-4">
+    <label for="description" class="form-label"><b>More about the STATE</b></label>
+    <input name="listing[description]" value="<%= listing.description %>" type="text" class="form-control" required />
+   </div>
+      
+<div class="cols mg-4">
+  <label for="totalProduction" class="form-label"><b>totalProduction</b></label>
+  <input name="listing[totalProduction]" value="<%= listing.totalProduction %>" type="number" class="form-control" required/>
+</div>
+
+<!--  -->
+<div class="cols mg-4">
+  <label for="firstHour" class="form-label"><b>12AM-1AM</b></label>
+  <input name="listing[firstHour]" value="<%= listing.firstHour %>" type="number" class="form-control" required/>
+</div>
+
+<div class="cols mg-4">
+  <label for="secondHour" class="form-label"><b>1AM-2AM</b></label>
+  <input name="listing[secondHour]" value="<%= listing.secondHour %>" type="number" class="form-control" required/>
+</div>
+
+<div class="cols mg-4">
+  <label for="thirdHour" class="form-label"><b>2AM-3AM</b></label>
+  <input name="listing[thirdHour]" value="<%= listing.thirdHour %>" type="number" class="form-control" required/>
+</div>
+
+<div class="cols mg-4">
+  <label for="ForthHour" class="form-label"><b>3AM-4AM</b></label>
+  <input name="listing[ForthHour]" value="<%= listing.ForthHour %>" type="number" class="form-control" required/>
+</div>
+
+<div class="cols mg-4">
+  <label for="fifthdHour" class="form-label"><b>4AM-5AM</b></label>
+  <input name="listing[fifthdHour]" value="<%= listing.fifthdHour %>" type="number" class="form-control" required/>
+</div>
+
+<div class="cols mg-4">
+  <label for="sixthHour" class="form-label"><b>5AM-6AM</b></label>
+  <input name="listing[sixthHour]" value="<%= listing.sixthHour %>" type="number" class="form-control" required/>
+</div>
+
+<div class="cols mg-4">
+  <label for="seventhHour" class="form-label"><b>6AM-7AM</b></label>
+  <input name="listing[seventhHour]" value="<%= listing.seventhHour %>" type="number" class="form-control" required/>
+</div>
+
+<div class="cols mg-4">
+  <label for="eightHour" class="form-label"><b>7AM-8AM</b></label>
+  <input name="listing[eightHour]" value="<%= listing.eightHour %>" type="number" class="form-control" required/>
+</div>
+
+<div class="cols mg-4">
+  <label for="NinthHour" class="form-label"><b>8AM-9AM</b></label>
+  <input name="listing[NinthHour]" value="<%= listing.NinthHour %>" type="number" class="form-control" required/>
+</div>
+
+<div class="cols mg-4">
+  <label for="tenthHour" class="form-label"><b>9AM-10AM</b></label>
+  <input name="listing[tenthHour]" value="<%= listing.tenthHour %>" type="number" class="form-control" required/>
+</div>
+
+<div class="cols mg-4">
+  <label for="eleventhHour" class="form-label"><b>10AM-11AM</b></label>
+  <input name="listing[eleventhHour]" value="<%= listing.eleventhHour %>" type="number" class="form-control" required/>
+</div>
+
+<div class="cols mg-4">
+  <label for="twelveHour" class="form-label"><b>11AM-12PM</b></label>
+  <input name="listing[twelveHour]" value="<%= listing.twelveHour %>" type="number" class="form-control" required/>
+</div>
+
+<div class="cols mg-4">
+  <label for="thirteenHour" class="form-label"><b>00PM-01PM</b></label>
+  <input name="listing[thirteenHour]" value="<%= listing.thirteenHour %>" type="number" class="form-control" required/>
+</div>
+
+<div class="cols mg-4">
+  <label for="fourteenHour" class="form-label"><b>01PM-02PM</b></label>
+  <input name="listing[fourteenHour]" value="<%= listing.fourteenHour %>" type="number" class="form-control" required/>
+</div>
+
+<div class="cols mg-4">
+  <label for="fifteenHour" class="form-label"><b>02PM-03PM</b></label>
+  <input name="listing[fifteenHour]" value="<%= listing.fifteenHour %>" type="number" class="form-control" required/>
+</div>
+
+<div class="cols mg-4">
+  <label for="sixteenHour" class="form-label"><b>03PM-04PM</b></label>
+  <input name="listing[sixteenHour]" value="<%= listing.sixteenHour %>" type="number" class="form-control" required/>
+</div>
+
+<div class="cols mg-4">
+  <label for="seventeenHour" class="form-label"><b>04PM-05PM</b></label>
+  <input name="listing[seventeenHour]" value="<%= listing.seventeenHour %>" type="number" class="form-control" required/>
+</div>
+
+<div class="cols mg-4">
+  <label for="eighteenHour" class="form-label"><b>05PM-06PM</b></label>
+  <input name="listing[eighteenHour]" value="<%= listing.eighteenHour %>" type="number" class="form-control" required/>
+</div>
+
+<div class="cols mg-4">
+  <label for="nineteenHour" class="form-label"><b>06PM-07PM</b></label>
+  <input name="listing[nineteenHour]" value="<%= listing.nineteenHour %>" type="number" class="form-control" required/>
+</div>
+
+<div class="cols mg-4">
+  <label for="twentyHour" class="form-label"><b>07PM-08PM</b></label>
+  <input name="listing[twentyHour]" value="<%= listing.twentyHour %>" type="number" class="form-control" required/>
+</div>
+
+<div class="cols mg-4">
+  <label for="twenthoneHour" class="form-label"><b>08PM-09PM</b></label>
+  <input name="listing[twenthoneHour]" value="<%= listing.twenthoneHour %>" type="number" class="form-control" required/>
+</div>
+
+<div class="cols mg-4">
+  <label for="twenthtwoHour" class="form-label"><b>09PM-10PM</b></label>
+  <input name="listing[twenthtwoHour]" value="<%= listing.twenthtwoHour %>" type="number" class="form-control" required/>
+</div>
+
+<div class="cols mg-4">
+  <label for="twentythreeHour" class="form-label"><b>10PM-11PM</b></label>
+  <input name="listing[twentythreeHour]" value="<%= listing.twentythreeHour %>" type="number" class="form-control" required/>
+</div>
+
+<div class="cols mg-4">
+  <label for="twentyfourHour" class="form-label"><b>11PM-12PM</b></label>
+  <input name="listing[twentyfourHour]" value="<%= listing.twentyfourHour %>" type="number" class="form-control" required/>
+</div>
+
+
+
+
+
+<!--  -->
+
       <br /><br />
-      <textarea name="listing[description]">
-<%= listing.description %></textarea
-      >
-      <br /><br />
-      <input name="listing[image]" value="<%= listing.image %>" type="text" />
-      <br /><br />
-      <input name="listing[price]" value="<%= listing.price %>" type="number" />
-      <br /><br />
-      <input
-        name="listing[country]"
-        value="<%= listing.country %>"
-        type="text"
-      />
-      <br /><br />
-      <input
-        name="listing[location]"
-        value="<%= listing.location %>"
-        type="text"
-      />
-      <br /><br />
-      <button>Edit</button>
+
+      <button class="btn btn-dark btn-lg">SUBMIT EDIT</button>
     </form>
   </body>
-</html>
+

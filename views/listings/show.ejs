@@ -1,24 +1,181 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wanderlust</title>
-  </head>
-  <body>
-    <h3>Listing Details :</h3>
-    <ul>
-      <li><%= listing.title %></li>
-      <li><%= listing.description %></li>
-      <li>&#8377; <%= listing.price.toLocaleString("en-IN") %></li>
-      <li><%= listing.location %></li>
-      <li><%= listing.country %></li>
-    </ul>
-    <br />
-    <a href="/listings/<%= listing._id %>/edit">Edit this Listing</a>
-    <br /><br />
-    <form method="POST" action="/listings/<%=listing._id%>?_method=DELETE">
-      <button>Delete this listing</button>
-    </form>
-  </body>
-</html>
+<% layout("/layouts/boilerplate") -%>
+<body>
+  <div class="container">
+    <div class="outer">
+      <div>
+        <a href="/listings/<%= listing._id %>/edit"><button class="button">Edit this Listing</button></a>
+      </div>
+      <div>
+        <form method="POST" action="/listings/<%=listing._id%>?_method=DELETE">
+          <button class="button btn-danger">Delete this listing</button>
+        </form>
+      </div>
+    </div>
+
+    <h3 style=>Electricity usage Details:</h3>
+
+    <table class="table table-hover" id="myTable" data-toggle="table" data-sortable="true" data-pagination="true">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th data-field="column1">Electricity Demand(In Kwatt)</th>
+        </tr>
+      </thead>
+      <tr>
+        <td>12AM-1AM</td>
+        <td><%= listing.firstHour %>KWH</td>
+      </tr>
+      <tr>
+        <td>1AM-2AM</td>
+        <td><%= listing.secondHour %>KWH</td>
+      </tr>
+      <tr>
+        <td>2AM-3AM</td>
+        <td><%= listing.thirdHour %>KWH</td>
+      </tr>
+      <tr>
+        <td>3AM-4AM</td>
+        <td><%= listing.ForthHour %>KWH</td>
+      </tr>
+      <tr>
+        <td>4AM-5AM</td>
+        <td><%= listing.fifthdHour %>KWH</td>
+      </tr>
+      <tr>
+        <td>5AM-6AM</td>
+        <td><%= listing.sixthHour %>KWH</td>
+      </tr>
+      <tr>
+        <td>6AM-7AM</td>
+        <td><%= listing.seventhHour %>KWH</td>
+      </tr>
+      <tr>
+        <td>7AM-8AM</td>
+        <td><%= listing.eightHour %>KWH</td>
+      </tr>
+      <tr>
+        <td>8AM-9AM</td>
+        <td><%= listing.NinthHour %>KWH</td>
+      </tr>
+      <tr>
+        <td>9AM-10AM</td>
+        <td><%= listing.tenthHour %>KWH</td>
+      </tr>
+      <tr>
+        <td>10AM-11AM</td>
+        <td><%= listing.eleventhHour %>KWH</td>
+      </tr>
+      <tr>
+        <td>11AM-12PM</td>
+        <td><%= listing.twelveHour %>KWH</td>
+      </tr>
+      <tr>
+        <td>12PM-1PM</td>
+        <td><%= listing.thirteenHour %>KWH</td>
+      </tr>
+      <tr>
+        <td>1PM-2PM</td>
+        <td><%= listing.fourteenHour %>KWH</td>
+      </tr>
+      <tr>
+        <td>2PM-3PM</td>
+        <td><%= listing.fifteenHour %>KWH</td>
+      </tr>
+      <tr>
+        <td>3PM-4PM</td>
+        <td><%= listing.sixteenHour %>KWH</td>
+      </tr>
+      <tr>
+        <td>4PM-5PM</td>
+        <td><%= listing.seventeenHour %>KWH</td>
+      </tr>
+      <tr>
+        <td>5PM-6PM</td>
+        <td><%= listing.eighteenHour %>KWH</td>
+      </tr>
+      <tr>
+        <td>6PM-7PM</td>
+        <td><%= listing.nineteenHour %>KWH</td>
+      </tr>
+      <tr>
+        <td>7PM-8PM</td>
+        <td><%= listing.twentyHour %>KWH</td>
+      </tr>
+      <tr>
+        <td>8PM-9PM</td>
+        <td><%= listing.twenthoneHour %>KWH</td>
+      </tr>
+      <tr>
+        <td>9PM-10PM</td>
+        <td><%= listing.twenthtwoHour %>KWH</td>
+      </tr>
+      <tr>
+        <td>10PM-11PM</td>
+        <td><%= listing.twentythreeHour %>KWH</td>
+      </tr>
+      <tr>
+        <td>11PM-12AM</td>
+        <td><%= listing.twentyfourHour %>KWH</td>
+      </tr>
+
+      <tr>
+        <td>OBSERVATION:</td>
+        <td>
+          <% 
+            let minHour = Math.min(
+                listing.firstHour, listing.secondHour, listing.thirdHour, listing.ForthHour, 
+                listing.fifthdHour, listing.sixthHour, listing.seventhHour, listing.eightHour, 
+                listing.NinthHour, listing.tenthHour, listing.eleventhHour, listing.twelveHour, 
+                listing.thirteenHour, listing.fourteenHour, listing.fifteenHour, listing.sixteenHour, 
+                listing.seventeenHour, listing.eighteenHour, listing.nineteenHour, listing.twentyHour, 
+                listing.twenthoneHour, listing.twenthtwoHour, listing.twentythreeHour, listing.twentyfourHour
+            );
+
+            let sum = listing.firstHour + listing.secondHour + listing.thirdHour + listing.ForthHour + 
+                      listing.fifthdHour + listing.sixthHour + listing.seventhHour + listing.eightHour + 
+                      listing.NinthHour + listing.tenthHour + listing.eleventhHour + listing.twelveHour + 
+                      listing.thirteenHour + listing.fourteenHour + listing.fifteenHour + listing.sixteenHour + 
+                      listing.seventeenHour + listing.eighteenHour + listing.nineteenHour + listing.twentyHour + 
+                      listing.twenthoneHour + listing.twenthtwoHour + listing.twentythreeHour + listing.twentyfourHour;
+            
+            let minHourTime = "";
+            if (minHour === listing.firstHour) minHourTime = "12AM-1AM";
+            else if (minHour === listing.secondHour) minHourTime = "1AM-2AM";
+            else if (minHour === listing.thirdHour) minHourTime = "2AM-3AM";
+            else if (minHour === listing.ForthHour) minHourTime = "3AM-4AM";
+            else if (minHour === listing.fifthdHour) minHourTime = "4AM-5AM";
+            else if (minHour === listing.sixthHour) minHourTime = "5AM-6AM";
+            else if (minHour === listing.seventhHour) minHourTime = "6AM-7AM";
+            else if (minHour === listing.eightHour) minHourTime = "7AM-8AM";
+            else if (minHour === listing.NinthHour) minHourTime = "8AM-9AM";
+            else if (minHour === listing.tenthHour) minHourTime = "9AM-10AM";
+            else if (minHour === listing.eleventhHour) minHourTime = "10AM-11AM";
+            else if (minHour === listing.twelveHour) minHourTime = "11AM-12PM";
+            else if (minHour === listing.thirteenHour) minHourTime = "12PM-1PM";
+            else if (minHour === listing.fourteenHour) minHourTime = "1PM-2PM";
+            else if (minHour === listing.fifteenHour) minHourTime = "2PM-3PM";
+            else if (minHour === listing.sixteenHour) minHourTime = "3PM-4PM";
+            else if (minHour === listing.seventeenHour) minHourTime = "4PM-5PM";
+            else if (minHour === listing.eighteenHour) minHourTime = "5PM-6PM";
+            else if (minHour === listing.nineteenHour) minHourTime = "6PM-7PM";
+            else if (minHour === listing.twentyHour) minHourTime = "7PM-8PM";
+            else if (minHour === listing.twenthoneHour) minHourTime = "8PM-9PM";
+            else if (minHour === listing.twenthtwoHour) minHourTime = "9PM-10PM";
+            else if (minHour === listing.twentythreeHour) minHourTime = "10PM-11PM";
+            else if (minHour === listing.twentyfourHour) minHourTime = "11PM-12AM";
+          %>
+          PLEASE SHIFT YOUR LOAD DURING THE TIME WHEN LOAD IS LOWEST: <%= minHour %> KWH (<%= minHourTime %>)
+        </td>
+      </tr>
+      <tr>
+        <td>Total Electricity Consumption</td>
+        <td><%= sum %> KWH</td>
+      </tr>
+      <tr>
+        <td>Power Available</td>
+        <td><%= listing.totalProduction %> KWH</td>
+      </tr>
+    </table>
+  </div>
+</body>
+

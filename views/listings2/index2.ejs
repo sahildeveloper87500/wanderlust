@@ -1,0 +1,102 @@
+<% layout("/layouts/boilerplate2") -%>
+
+<div class="container">
+  <div class="search-filter">
+    <input type="text" id="searchInput" onkeyup="searchListings()" placeholder="Search for states......" title="Type in a city or description">
+
+  </div>
+
+  <div class="row row-cols-lg-4" id="listingsContainer">
+    <% for(let listing of allListings) { %>
+      <% 
+        const hours = [
+          listing.firstHour, listing.secondHour, listing.thirdHour, listing.ForthHour, listing.fifthdHour, listing.sixthHour, 
+          listing.seventhHour, listing.eightHour, listing.NinthHour, listing.tenthHour, listing.eleventhHour, listing.twelveHour, 
+          listing.thirteenHour, listing.fourteenHour, listing.fifteenHour, listing.sixteenHour, listing.seventeenHour, listing.eighteenHour, 
+          listing.nineteenHour, listing.twentyHour, listing.twenthoneHour, listing.twenthtwoHour, listing.twentythreeHour, listing.twentyfourHour
+        ];
+
+        const totalUsage = hours.reduce((acc, hour) => acc + hour, 0);
+        const averageUsage = (totalUsage / hours.length).toFixed(2);
+        const peakHour = hours.indexOf(Math.max(...hours));
+        const peakTime = `${peakHour % 12 || 12}${peakHour < 12 ? 'AM' : 'PM'}-${(peakHour + 1) % 12 || 12}${(peakHour + 1) < 12 ? 'AM' : 'PM'}`;
+      %>
+      <div class="card shadow-lg listing-card" data-demand="<%= listing.demand %>" style="width: 18rem; margin: 15px;">
+        <div class="card-body">
+          <h5 class="card-title"><%= listing.city.toUpperCase() %></h5>
+          <h6 class="card-subtitle mb-2 text-body-secondary"><%= listing.description %></h6>
+        
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Total Usage: <%= totalUsage %> KWH</li>
+            <li class="list-group-item">Average Demand: <%= averageUsage %> KWH</li>
+            <li class="list-group-item">Peak Demand Time: <%= peakTime %></li>
+            <li class="list-group-item">Power Available: <%= listing.totalProduction %> KWH</li>
+          </ul>
+          <button class="button-81" role="button">
+            <a href="/listings2/<%= listing._id %>" class="card-link">CLICK TO OPEN</a>
+          </button>
+        </div>
+      </div>
+    <% } %>
+  </div>
+</div>
+
+<script>
+  function searchListings() {
+    let input = document.getElementById("searchInput");
+    let filter = input.value.toUpperCase();
+    let container = document.getElementById("listingsContainer");
+    let cards = container.getElementsByClassName("listing-card");
+
+    for (let i = 0; i < cards.length; i++) {
+      let title = cards[i].getElementsByClassName("card-title")[0];
+      let subtitle = cards[i].getElementsByClassName("card-subtitle")[0];
+      if (title.innerText.toUpperCase().indexOf(filter) > -1 || subtitle.innerText.toUpperCase().indexOf(filter) > -1) {
+        cards[i].style.display = "";
+      } else {
+        cards[i].style.display = "none";
+      }
+    }
+  }
+
+
+</script>
+
+<style>
+  .search-filter {
+    margin-bottom: 20px;
+    width: 55vw;
+    margin: 2vh;
+    height: 4vh;
+  }
+
+  #searchInput {
+    padding: 5px;
+    height: 4vh;
+    width: 55vw;
+    margin: 2vh;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  #filterSelect {
+    padding: 5px;
+    height: 4vh;
+    margin: 2vh;
+    width: 55vw;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .listing-card {
+    margin-bottom: 20px;
+  }
+
+  .list-group-item {
+    font-size: 0.9rem;
+  }
+  .button-81{
+    margin: 5vh;
+  }
+</style>

@@ -1,0 +1,380 @@
+<% layout("/layouts/boilerplate2") -%>
+<body>
+  <div class="container">
+    <div class="outer">
+      <div>
+        <button class="button" onclick="downloadPDF()">Download PDF</button>
+      </div>
+      <div>
+        <button class="button" onclick="notifyMe()">Notify Me During Low Load</button>
+      </div>
+    </div>
+
+    <h3 style="color: white;">Electricity Usage Details:</h3>
+
+    <!-- Search and Filter Section -->
+    <div class="search-filter">
+      <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search for time slots.." title="Type in a time slot">
+      <select id="filterSelect" onchange="filterTable()">
+        <option value="all">Show All</option>
+        <option value="low">Low Demand (0-100 KWH)</option>
+        <option value="medium">Medium Demand (101-300 KWH)</option>
+        <option value="high">High Demand (301-400 KWH)</option>
+      </select>
+    </div>
+
+    <table class="table table-hover" id="myTable" data-toggle="table" data-sortable="true">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th data-field="column1">Electricity Demand (In KWH)</th>
+          <th data-field="price">Electricity Price per unit in (Rupees)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% 
+          function calculatePrice(demand) {
+            const minPrice = 5;
+            const maxPrice = 15;
+            const maxDemand = 400; // Assume a maximum demand value for scaling
+            return Math.max(minPrice, Math.min(maxPrice, Math.round((demand / maxDemand) * (maxPrice - minPrice) + minPrice)));
+          }
+
+          const hours = [
+            { time: "12AM-1AM", demand: listing.firstHour },
+            { time: "1AM-2AM", demand: listing.secondHour },
+            { time: "2AM-3AM", demand: listing.thirdHour },
+            { time: "3AM-4AM", demand: listing.ForthHour },
+            { time: "4AM-5AM", demand: listing.fifthdHour },
+            { time: "5AM-6AM", demand: listing.sixthHour },
+            { time: "6AM-7AM", demand: listing.seventhHour },
+            { time: "7AM-8AM", demand: listing.eightHour },
+            { time: "8AM-9AM", demand: listing.NinthHour },
+            { time: "9AM-10AM", demand: listing.tenthHour },
+            { time: "10AM-11AM", demand: listing.eleventhHour },
+            { time: "11AM-12PM", demand: listing.twelveHour },
+            { time: "12PM-1PM", demand: listing.thirteenHour },
+            { time: "1PM-2PM", demand: listing.fourteenHour },
+            { time: "2PM-3PM", demand: listing.fifteenHour },
+            { time: "3PM-4PM", demand: listing.sixteenHour },
+            { time: "4PM-5PM", demand: listing.seventeenHour },
+            { time: "5PM-6PM", demand: listing.eighteenHour },
+            { time: "6PM-7PM", demand: listing.nineteenHour },
+            { time: "7PM-8PM", demand: listing.twentyHour },
+            { time: "8PM-9PM", demand: listing.twenthoneHour },
+            { time: "9PM-10PM", demand: listing.twenthtwoHour },
+            { time: "10PM-11PM", demand: listing.twentythreeHour },
+            { time: "11PM-12AM", demand: listing.twentyfourHour }
+          ];
+        %>
+        <% hours.forEach(hour => { %>
+          <tr>
+            <td><%= hour.time %></td>
+            <td><%= hour.demand %> KWH</td>
+            <td><%= calculatePrice(hour.demand) %> Rupees</td>
+          </tr>
+        <% }); %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>OBSERVATION:</td>
+          <td colspan="2">
+            <% 
+              let minHours = hours.slice().sort((a, b) => a.demand - b.demand).slice(0, 5);
+              let sum = hours.reduce((acc, hour) => acc + hour.demand, 0);
+            %>
+            PLEASE SHIFT YOUR LOAD DURING THE TIMES WHEN LOAD IS LOWEST:
+            <ul>
+              <% minHours.forEach(hour => { %>
+                <li><%= hour.time %>: <%= hour.demand %> KWH</li>
+              <% }); %>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>Total Electricity Consumption</td>
+          <td colspan="2"><%= sum %> KWH</td>
+        </tr>
+        <tr>
+          <td>Power Available</td>
+          <td colspan="2"><%= listing.totalProduction %> KWH</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <canvas id="demandPriceChart"></canvas>
+    <div class="pagination" id="paginationContainer"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    const itemsPerPage = 8;
+    let currentPage = 1;
+
+    function renderTable(page) {
+      const table = document.getElementById("myTable");
+      const tbody = table.getElementsByTagName("tbody")[0];
+      const rows = tbody.getElementsByTagName("tr");
+      const totalRows = rows.length;
+      const totalPages = Math.ceil(totalRows / itemsPerPage);
+      const start = (page - 1) * itemsPerPage;
+      const end = page * itemsPerPage;
+
+      for (let i = 0; i < totalRows; i++) {
+        rows[i].style.display = (i >= start && i < end) ? "" : "none";
+      }
+
+      renderPagination(totalPages);
+    }
+
+    function renderPagination(totalPages) {
+      const paginationContainer = document.getElementById("paginationContainer");
+      paginationContainer.innerHTML = "";
+
+      for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement("button");
+        pageButton.innerText = i;
+        pageButton.className = "pagination-btn";
+        pageButton.addEventListener("click", () => {
+          currentPage = i;
+          renderTable(currentPage);
+          highlightCurrentPage();
+        });
+        paginationContainer.appendChild(pageButton);
+      }
+
+      highlightCurrentPage();
+    }
+
+    function highlightCurrentPage() {
+      const buttons = document.querySelectorAll(".pagination-btn");
+      buttons.forEach(button => {
+        button.classList.remove("active");
+      });
+      buttons[currentPage - 1].classList.add("active");
+    }
+
+    function searchTable() {
+      let input = document.getElementById("searchInput");
+      let filter = input.value.toUpperCase();
+      let table = document.getElementById("myTable");
+      let tr = table.getElementsByTagName("tr");
+
+      for (let i = 1; i < tr.length; i++) {
+        let td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          let txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+
+    function filterTable() {
+      let select = document.getElementById("filterSelect");
+      let filter = select.value;
+      let table = document.getElementById("myTable");
+      let tr = table.getElementsByTagName("tr");
+
+      for (let i = 1; i < tr.length; i++) {
+        let td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+          let demand = parseFloat(td.textContent || td.innerText);
+          if (filter === "all") {
+            tr[i].style.display = "";
+          } else if (filter === "low" && demand >= 0 && demand <= 100) {
+            tr[i].style.display = "";
+          } else if (filter === "medium" && demand > 100 && demand <= 300) {
+            tr[i].style.display = "";
+          } else if (filter === "high" && demand > 300 && demand <= 400) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+
+    function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      let table = document.getElementById("myTable");
+      let rows = table.getElementsByTagName("tr");
+
+      let data = [];
+      for (let i = 0; i < rows.length; i++) {
+        let row = [], cols = rows[i].getElementsByTagName("td");
+        for (let j = 0; j < cols.length; j++) {
+          row.push(cols[j].innerText);
+        }
+        data.push(row);
+      }
+
+      let head = [['Time', 'Electricity Demand (In KWH)', 'Ev Charging Price per unit in (Rupees)']];
+      data = head.concat(data);
+
+      doc.autoTable({
+        head: [head[0]],
+        body: data.slice(1)
+      });
+
+      doc.save('electricity_usage_details.pdf');
+    }
+
+    function notifyMe() {
+      if (Notification.permission !== "granted") {
+        Notification.requestPermission().then(permission => {
+          if (permission === "granted") {
+            sendNotification();
+          }
+        });
+      } else {
+        sendNotification();
+      }
+    }
+
+    function sendNotification() {
+      let hours = [
+        { time: "12AM-1AM", demand: <%= listing.firstHour %> },
+        { time: "1AM-2AM", demand: <%= listing.secondHour %> },
+        { time: "2AM-3AM", demand: <%= listing.thirdHour %> },
+        { time: "3AM-4AM", demand: <%= listing.ForthHour %> },
+        { time: "4AM-5AM", demand: <%= listing.fifthdHour %> },
+        { time: "5AM-6AM", demand: <%= listing.sixthHour %> },
+        { time: "6AM-7AM", demand: <%= listing.seventhHour %> },
+        { time: "7AM-8AM", demand: <%= listing.eightHour %> },
+        { time: "8AM-9AM", demand: <%= listing.NinthHour %> },
+        { time: "9AM-10AM", demand: <%= listing.tenthHour %> },
+        { time: "10AM-11AM", demand: <%= listing.eleventhHour %> },
+        { time: "11AM-12PM", demand: <%= listing.twelveHour %> },
+        { time: "12PM-1PM", demand: <%= listing.thirteenHour %> },
+        { time: "1PM-2PM", demand: <%= listing.fourteenHour %> },
+        { time: "2PM-3PM", demand: <%= listing.fifteenHour %> },
+        { time: "3PM-4PM", demand: <%= listing.sixteenHour %> },
+        { time: "4PM-5PM", demand: <%= listing.seventeenHour %> },
+        { time: "5PM-6PM", demand: <%= listing.eighteenHour %> },
+        { time: "6PM-7PM", demand: <%= listing.nineteenHour %> },
+        { time: "7PM-8PM", demand: <%= listing.twentyHour %> },
+        { time: "8PM-9PM", demand: <%= listing.twenthoneHour %> },
+        { time: "9PM-10PM", demand: <%= listing.twenthtwoHour %> },
+        { time: "10PM-11PM", demand: <%= listing.twentythreeHour %> },
+        { time: "11PM-12AM", demand: <%= listing.twentyfourHour %> }
+      ];
+
+      let minHours = hours.slice().sort((a, b) => a.demand - b.demand).slice(0, 5);
+
+      minHours.forEach(hour => {
+        if (Notification.permission === "granted") {
+          new Notification("Low Load Period", {
+            body: `The load is low during ${hour.time} with ${hour.demand} KWH demand.`,
+            icon: 'https://example.com/icon.png' // Optional: add an icon URL
+          });
+        }
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderTable(currentPage);
+      renderChart();
+    });
+
+    function renderChart() {
+      const ctx = document.getElementById('demandPriceChart').getContext('2d');
+      const hours = <%= JSON.stringify(hours) %>;
+      const labels = hours.map(hour => hour.time);
+      const demandData = hours.map(hour => hour.demand);
+      const priceData = hours.map(hour => calculatePrice(hour.demand));
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Electricity Demand (KWH)',
+              data: demandData,
+              borderColor: 'rgba(75, 192, 192, 1)',
+              backgroundColor: 'rgba(75, 192, 192, 0.2)',
+              yAxisID: 'y',
+            },
+            {
+              label: 'Price per unit (Rupees)',
+              data: priceData,
+              borderColor: 'rgba(153, 102, 255, 1)',
+              backgroundColor: 'rgba(153, 102, 255, 0.2)',
+              yAxisID: 'y1',
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              type: 'linear',
+              position: 'left',
+            },
+            y1: {
+              type: 'linear',
+              position: 'right',
+              grid: {
+                drawOnChartArea: false,
+              },
+            }
+          }
+        }
+      });
+    }
+  </script>
+
+  <style>
+    .search-filter {
+      margin-bottom: 20px;
+    }
+
+    #searchInput {
+      padding: 5px;
+      margin-right: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    #filterSelect {
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .pagination-btn {
+      margin: 0 5px;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 4px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+
+    .pagination-btn.active {
+      background-color: #0056b3;
+    }
+
+    #demandPriceChart {
+      max-width: 800px;
+      margin: 20px auto;
+    }
+  </style>
+</body>
+

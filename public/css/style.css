@@ -1,0 +1,122 @@
+/* navbar */
+body{
+    background-color: #3a5e5f !important;
+}
+.navbar{
+  height:5rem;
+  border: none !important;
+  background-color: #2F3C7E;
+  color: white;
+}
+.fa-lightbulb{
+    font-size: 3rem;
+    color: yellow;
+}
+.nav-link{
+    color: #fffdfd !important;
+      font-weight: 600 !important;
+}
+
+.card{
+   border-radius: 1rem !important;
+    margin:2rem !important;
+    background-color: #2F3C7E !important;
+    color: white !important;
+   
+}
+
+
+
+
+/* CSS */
+
+a{
+    text-decoration: none;
+}
+
+/* CSS */
+.button-81 {
+  background-color: #fff;
+  border: 0 solid #e2e8f0;
+  border-radius: 1.5rem;
+  box-sizing: border-box;
+  color: #0d172a;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Basier circle",-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 1rem 1.6rem;
+  text-align: center;
+  text-decoration: none #0d172a solid;
+  text-decoration-thickness: auto;
+  transition: all .1s cubic-bezier(.4, 0, .2, 1);
+  box-shadow: 0px 1px 2px rgba(166, 175, 195, 0.25);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-81:hover {
+  background-color: #1e293b;
+  color: #fff;
+}
+
+@media (min-width: 768px) {
+  .button-81 {
+    font-size: 1.125rem;
+    padding: 1rem 2rem;
+  }
+}
+
+
+/* card */
+
+.card-link{
+    text-decoration: none;
+}
+.card-body:hover{
+   color: black;
+   background-color: white;
+}
+
+.btn-1{
+    color:#FBEAEB;
+    background-color: #2F3C7E;
+    margin: 0.5rem;
+}
+/* Base button styles */
+.button {
+    padding: 0.7rem;
+    margin: 1rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color:#FBEAEB;
+    background-color: #2F3C7E;
+    cursor: pointer;
+    outline: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  /* 3D rising effect on hover */
+  .button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .outer{
+    display: flex;
+
+  }
+
+
+  /* new css addition */
+  .form-login{
+    margin-top: 10rem;
+  }
+  
+
+  
+  
